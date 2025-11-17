@@ -20,7 +20,7 @@ namespace TestCalculator.TestCalculator
         }
 
         [Fact]
-        public void CalcularFatorDiario_DeveCalcularCorretamente()
+        public void CalcularFatorDiario()
         {
             // Arrange
             decimal taxaAnual = 12m;
@@ -33,7 +33,7 @@ namespace TestCalculator.TestCalculator
         }
 
         [Fact]
-        public void CalcularFatorAcumulado_DeveMultiplicarETruncarCorretamente()
+        public void CalcularFatorAcumulado()
         {
             // Arrange
             List<decimal> fatores = new()
