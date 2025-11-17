@@ -76,15 +76,14 @@ namespace Application.Services
             };
         }
 
-        public async Task UpdateAsync(UpdateUserDto dto)
+        public async Task UpdateAsync(Guid id, UpdateUserDto dto)
         {
-            var user = new Users
-            {
-                Id = dto.Id,
-                Email = dto.Email,
-                PassWord = dto.PassWord,
-                Role = dto.Role
-            };
+            var user = await _repository.GetByIdAsync(id);
+            if (user == null) throw new Exception("User not found");
+
+            user.Email = dto.Email;
+            user.PassWord = dto.PassWord;
+            user.Role = dto.Role;
 
             await _repository.UpdateAsync(user);
         }

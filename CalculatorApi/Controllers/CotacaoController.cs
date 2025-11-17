@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.DTOs;
+using Application.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,17 +34,24 @@ namespace CalculatorApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Cotacao cotacao)
+        public async Task<IActionResult> Create([FromBody] CreateCotacaoDto dto)
         {
+            var cotacao = new Cotacao
+            {
+                Data = dto.Data,
+                Indexador = dto.Indexador,
+                Valor = dto.Valor
+            };
+
             await _service.AddAsync(cotacao);
+
             return CreatedAtAction(nameof(GetById), new { id = cotacao.id }, cotacao);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Cotacao cotacao)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCotacaoDto dto)
         {
-            if (id != cotacao.id) return BadRequest();
-            await _service.UpdateAsync(cotacao);
+            await _service.UpdateAsync(id, dto);
             return NoContent();
         }
 

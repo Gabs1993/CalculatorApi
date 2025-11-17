@@ -43,10 +43,9 @@ namespace CalculatorApi.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UpdateUserDto dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserDto dto)
         {
-            if (id != dto.Id) return BadRequest("Id mismatch");
-            await _service.UpdateAsync(dto);
+            await _service.UpdateAsync(id, dto);
             return NoContent();
         }
 
